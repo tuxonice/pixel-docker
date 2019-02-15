@@ -26,6 +26,8 @@ services:
       MYSQL_USER: pixel_user
       MYSQL_PASSWORD: pixel_secret
       MYSQL_ROOT_PASSWORD: root_secret
+    ports:
+      - 3306:3306
     
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -35,14 +37,19 @@ services:
       - 8000:80
     links:
       - database
-  
-  maildev:
-    image: djfarrelly/maildev
-    ports:
-      - 8001:80
   elasticsearch:
     image: elasticsearch:2.4.6-alpine
     ports:
       - 9200:9200
       - 9300:9300
+  maildev:
+    image: djfarrelly/maildev
+    ports:
+      - 8001:80
+  vue:
+   image: ebiven/vue-cli
+   volumes:
+      - ./htdocs:/var/www/html
+   ports:
+      - 8002:8080
 
