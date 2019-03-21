@@ -61,8 +61,12 @@ RUN chmod +x /disable-xdebug.sh /enable-xdebug.sh /usr/local/bin/entrypoint
 # configure php.ini settings
 COPY docker/application/php-config.ini /usr/local/etc/php/conf.d/php-config.ini
 
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem -subj "/C=PT/ST=Faro/L=Faro/O=Security/OU=Development/CN=localhost"
+
 COPY docker/application/application.conf /etc/apache2/sites-available/application.conf
-RUN a2dissite 000-default.conf && a2ensite application.conf && a2enmod rewrite
+COPY docker/application/application-ssl.conf /etc/apache2/sites-available/application-ssl.conf
+
+RUN a2dissite 000-default.conf && a2dissite default-ssl.conf && a2ensite application.conf && a2ensite application-ssl && a2enmod rewrite && a2enmod ssl
 
 COPY --from=vendor /usr/bin/composer /usr/bin/composer
 CMD ["apache2-foreground"]

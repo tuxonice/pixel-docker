@@ -48,19 +48,16 @@ $ bin/cli.sh
 
 ```
 
-After you have started the machine through `bin/start.sh`, you may access the website on the following URL
+### Service endpoints / ports
+After you have started the machine through `bin/start.sh`, you may access the website and services on the following URLs
 
-```
-http://localhost:8080
-```
-phpMyAdmin
-http://localhost:8000
+- **Apache:** http://localhost:8080
+- **Apache SSL:** https://localhost
+- **phpMyAdmin:** http://localhost:8000
+- **Mailer:** http://localhost:8001
 
-
-Mailer
-http://localhost:8001
-
-Database name: pixel
-Database User: pixel_user
-Database Psw: pixel_secret
+- **Database Name:** pixel
+- **Database User:** pixel_user
+- **Database Psw:** pixel_secret
+- **Database Port:** 3306
 
