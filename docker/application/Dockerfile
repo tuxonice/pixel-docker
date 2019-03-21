@@ -39,6 +39,15 @@ RUN docker-php-ext-install -j$(nproc) gd
 
 RUN pecl install xdebug
 
+# install node js
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
+RUN apt-get update && apt-get install -y nodejs
+
+# install yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -y && apt-get install -y yarn
+
 ENTRYPOINT ["entrypoint"]
 
 RUN echo "ServerName $(/sbin/ip route|awk '/default/ { print $3 }')" >> /etc/apache2/apache2.conf
